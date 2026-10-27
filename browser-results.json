@@ -1,0 +1,44 @@
+[
+  {
+    "check": "Vue screen loads with mocked API",
+    "expected": "Home and crisis link visible",
+    "observed": "Home heading and crisis link visible",
+    "passed": true
+  },
+  {
+    "check": "Leave early screen",
+    "expected": "No penalty or completion force",
+    "observed": "You chose to stop.",
+    "passed": true
+  },
+  {
+    "check": "Mocked model failure UI",
+    "expected": "Fallback label and persistent crisis link displayed",
+    "observed": "fallback and Crisis support visible",
+    "passed": true
+  },
+  {
+    "check": "Mocked history screen",
+    "expected": "Recorded early exit and conversation visible",
+    "observed": "Both visible",
+    "passed": true
+  },
+  {
+    "check": "Unhandled browser JS errors",
+    "expected": "None expected",
+    "observed": "none",
+    "passed": true
+  },
+  {
+    "check": "Virtual-clock exercise duration",
+    "expected": "Full exercise completes at about 70s simulated app time",
+    "observed": "Guided time: 70 seconds, excluding 0 seconds of user pauses.",
+    "passed": true
+  },
+  {
+    "check": "Static crisis page without JS",
+    "expected": "Support heading and US 988 information visible",
+    "observed": "Static support and 988 visible",
+    "passed": true
+  }
+]

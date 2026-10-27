@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Step | Coursework Prototype</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<header class="topbar"><a class="brand" href="/">One Step</a><a class="crisis" href="/support.html">Crisis support</a></header>
+<main id="app" v-cloak>
+  <p class="notice">Classroom software prototype · Not therapy, crisis support, or a monitored service · Fictional scenarios only</p>
+  <div v-if="error" class="error" role="alert">{{error}} <button @click="error=''">Dismiss</button></div>
+  <section v-if="screen==='home'" aria-labelledby="home-title">
+    <h1 id="home-title">One small step</h1><p>Choose a short practice. You can pause or leave anytime.</p>
+    <p class="muted" v-if="!simple">There is no score, diagnosis, or required writing.</p>
+    <button class="primary" @click="startExercise" :disabled="busy">{{busy?'Starting…':'Start 4–6 breathing'}}</button>
+    <button v-if="lastSession" @click="startExercise" :disabled="busy">Repeat last skill</button>
+    <button @click="openHistory">Review history</button>
+    <label class="settings"><input type="checkbox" v-model="simple"> Simple view (hide optional text)</label>
+  </section>
+  <section v-else-if="screen==='exercise'" aria-labelledby="exercise-title">
+    <div class="sessiontop"><span>4–6 breathing</span><span>{{Math.floor(Math.min(70,elapsed))}} / 70 seconds</span></div>
+    <h1 id="exercise-title" aria-live="polite">{{cueTitle}}</h1><p class="count">{{cueText}}</p>
+    <div class="ring" :class="phase" :key="phase" aria-hidden="true"></div>
+    <p class="muted" v-if="!simple">Inhale for 4, exhale for 6. Six complete cycles. You decide whether to continue.</p>
+    <div class="controls"><button class="primary" @click="togglePause">{{paused?'Resume':'Pause'}}</button><button @click="endExercise('left_early')">Leave exercise</button></div>
+  </section>
+  <section v-else-if="screen==='done'" aria-labelledby="done-title">
+    <h1 id="done-title">{{sessionStatus==='completed'?'You reached the end.':'You chose to stop.'}}</h1>
+    <p>{{sessionStatus==='completed'?'You can finish here.':'Leaving is always okay. You do not need to explain.'}}</p>
+    <p class="muted">Guided time: {{Math.round(elapsed)}} seconds, excluding {{Math.round(pausedSeconds)}} seconds of user pauses.</p>
+    <h2>Optional short chat</h2><p class="muted">Use fictional examples only. Replies may be mocked or unavailable.</p>
+    <label for="fictional-message">Fictional message (optional)</label><textarea id="fictional-message" rows="2" maxlength="400" v-model="messageText" placeholder="Example: I had trouble following the pace"></textarea>
+    <button @click="sendChat" :disabled="busy || !messageText.trim()">{{busy?'Sending…':'Send fictional message'}}</button>
+    <div v-if="reply" class="reply" aria-live="polite"><p>{{reply}}</p><span class="muted">Response mode: {{responseMode}}</span></div>
+    <div class="controls"><button @click="goHome">Home</button><button @click="openHistory">History</button></div>
+  </section>
+  <section v-else-if="screen==='history'" aria-labelledby="history-title">
+    <h1 id="history-title">Saved sessions</h1><p class="muted">Local fictional data only.</p><button @click="goHome">Home</button>
+    <p v-if="!history.length">No sessions saved yet.</p>
+    <ul class="history"><li v-for="item in history" :key="item.id"><strong>4–6 breathing</strong> — {{item.status.replace('_',' ')}} <span class="muted">{{item.started_at}} · {{item.actual_exercise_seconds ?? '—'}} s</span>
+      <button @click="loadMessages(item.id)">View chat</button></li></ul>
+    <div v-if="selectedHistory"><h2>Session {{selectedHistory}}</h2><p v-if="!savedMessages.length">No saved chat in this session.</p><div class="reply" v-for="item in savedMessages" :key="item.id"><strong>{{item.role}}</strong>: {{item.content}} <span class="muted">({{item.response_mode}})</span></div></div>
+  </section>
+</main>
+<footer>For classroom demonstration only. No professionals monitor this application.</footer>
+<script src="/static/vue.global.js"></script><script src="/static/app.js"></script>
+</body></html>

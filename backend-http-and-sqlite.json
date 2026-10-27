@@ -1,0 +1,29 @@
+{
+  "server_mode": "fail",
+  "session_id": 1,
+  "session_status": "completed",
+  "recorded_exercise_seconds": 70.02,
+  "assistant_mode": "fallback",
+  "messages_roles": [
+    "user",
+    "assistant"
+  ],
+  "support_status_code": 200,
+  "support_contains_988": true,
+  "sqlite_session_row": [
+    "breathing",
+    "completed",
+    70,
+    70.02
+  ],
+  "sqlite_message_rows": [
+    [
+      "user",
+      "user"
+    ],
+    [
+      "assistant",
+      "fallback"
+    ]
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "wall_time_seconds_from_exercise_visible_to_completion_visible": 70.24,
+  "display": "Guided time: 70 seconds, excluding 0 seconds of user pauses.",
+  "http": "mocked",
+  "browser": "Chromium/Playwright",
+  "fictional_scenario": true
+}
